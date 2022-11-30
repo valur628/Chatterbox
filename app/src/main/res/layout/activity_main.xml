@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/speechtextButton"
+        android:layout_width="172dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="364dp"
+        android:text="Cloud Start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="32dp"
+        android:text="수다쟁이"
+        app:layout_constraintBottom_toTopOf="@+id/speechtextButton"
+        app:layout_constraintEnd_toEndOf="@+id/speechtextButton" />
+
+    <Button
+        android:id="@+id/DatabaseResetButton"
+        android:layout_width="106dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="DB Reset"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
