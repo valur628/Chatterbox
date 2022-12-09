@@ -60,6 +60,8 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
     LocalDateTime readingDataStartTime;
     LocalDateTime readingDataEndTime;
     String bookNameFK;
+    boolean endEarlyCheck = false;
+
     //DB 관련
     private int bookDBCounter = 0;
     private int readingDBCounter = 0;
@@ -136,6 +138,9 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
         final Resources.Theme theme = getTheme();
         mColorHearing = ResourcesCompat.getColor(resources, R.color.status_hearing, theme);
         mColorNotHearing = ResourcesCompat.getColor(resources, R.color.status_not_hearing, theme);
+
+        Intent intent = getIntent();
+        bookDBCounter = intent.getIntExtra("pos", 0);
 
         //setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         mStatus = (TextView) findViewById(R.id.status);
@@ -300,6 +305,13 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
                                     mRate.setText("일치율: " + textMatchRate + "%");
                                     if(textMatchRate>=70) {
                                         pageCounter++;
+                                        if(endEarlyCheck == true) {
+
+                                        }
+                                        if(arrayContent[pageCounter].contains("===")) {
+                                            arrayContent[pageCounter] = arrayContent[pageCounter].replaceAll("===", "");
+                                            endEarlyCheck = true;
+                                        }
                                         mRead.setText(arrayContent[pageCounter]);
                                         mResult.setText("정답입니다. 계속 읽어주세요.");
                                     }
