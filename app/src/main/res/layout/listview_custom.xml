@@ -69,12 +69,11 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/play_button"
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
-                android:enabled="false"
-                android:text="▶" />
+                app:srcCompat="@drawable/img_button" />
 
         </LinearLayout>
 

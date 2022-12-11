@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     String bookDataImageAddress_one;
     String bookDataWriter_one;
     float bookDataRating_one;
-    TextView a;
+    //TextView a;
 
     ArrayList<MainViewModel> arrayMainViewModel;
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         resetBook();
 
-        a = findViewById(R.id.textViewTest);
+        //a = findViewById(R.id.textViewTest);
         Button dbResetButton=findViewById(R.id.DatabaseResetButton);
         dbResetButton.setOnClickListener(view -> {
             resetBook();

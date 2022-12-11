@@ -113,9 +113,9 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
     // View references
     private TextView mStatus;
     private TextView mText;
-    private TextView mSave;
+    //private TextView mSave;
     private TextView mRead;
-    private TextView mRate;
+    //private TextView mRate;
     private TextView mResult;
     private ResultAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -155,9 +155,9 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
         //setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         mStatus = (TextView) findViewById(R.id.status);
         mText = (TextView) findViewById(R.id.text_main);
-        mSave = (TextView) findViewById(R.id.inSaveText);
+        //mSave = (TextView) findViewById(R.id.inSaveText);
         mRead = (TextView) findViewById(R.id.inReadText);
-        mRate = (TextView) findViewById(R.id.rateText);
+        //mRate = (TextView) findViewById(R.id.rateText);
         mResult = (TextView) findViewById(R.id.resultText);
 
         BookDB = UserRoomDatabase.getDatabase(getApplicationContext()).getBookDatasDao().getAllData();
@@ -167,12 +167,12 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
         //getReadingDB(readingDBCounter);
         arrayContent = bookDataContent.split("___");
         mRead.setText(arrayContent[pageCounter]);
-        mResult.setText("텍스트를 읽어주세요.");
+        mResult.setText("하단의 문장을\n계속해서 읽어주세요.\n[ 시작 ]");
 
         textMatchRate = TextMatching.similarity(
                 "테스트용",
                 arrayContent[pageCounter])*100;  //멀티코어 프로세싱 박아야할듯
-        mRate.setText("일치율: " + Double.toString(textMatchRate) + "%");
+        //mRate.setText("일치율: " + Double.toString(textMatchRate) + "%");
         /*mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         final ArrayList<String> results = savedInstanceState == null ? null :
@@ -283,7 +283,14 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mStatus.setTextColor(hearingVoice ? mColorHearing : mColorNotHearing);
+                if(hearingVoice){
+                    mStatus.setTextColor(mColorHearing);
+                    mStatus.setText("인식 중입니다...");
+                }
+                else{
+                    mStatus.setTextColor(mColorNotHearing);
+                    mStatus.setText("인식이 없습니다.");
+                }
             }
         });
     }
@@ -308,12 +315,12 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
                                 if (isFinal) {
                                     if(endEarlyCheck == false) {
                                         mText.setText(null);
-                                        mSave.setText(text);
+                                        //mSave.setText(text);
                                         mRead.setText(arrayContent[pageCounter]);
                                         textMatchRate = TextMatching.similarity(
                                                 arrayContent[pageCounter],
                                                 text) * 100;  //멀티코어 프로세싱 박아야할듯
-                                        mRate.setText("일치율: " + textMatchRate + "%");
+                                        //mRate.setText("일치율: " + textMatchRate + "%");
                                     }
                                     if(textMatchRate>=70) {
                                         if(pageCounter < arrayContent.length);{
@@ -332,14 +339,14 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
                                                     endEarlyCheck = true;
                                                 }
                                                 mRead.setText(arrayContent[pageCounter]);
-                                                mResult.setText("정답입니다. 계속 읽어주세요.");
+                                                mResult.setText("하단의 문장을\n계속해서 읽어주세요.\n[ 정답 ]");
                                             }
                                         }
                                     }
                                     //mAdapter.addResult(text);
                                     //mRecyclerView.smoothScrollToPosition(0);
                                     else{
-                                        mResult.setText("오답입니다. 다시 읽어주세요.");
+                                        mResult.setText("하단의 문장을\n다시 읽어주세요.\n[ 오답 ]");
                                     }
                                 } else {
                                     if(endEarlyCheck == false) {

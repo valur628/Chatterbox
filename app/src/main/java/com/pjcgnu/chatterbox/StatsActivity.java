@@ -3,6 +3,7 @@ package com.pjcgnu.chatterbox;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +54,11 @@ public class StatsActivity extends AppCompatActivity {
         arrayList = new ArrayList<>();
         listView.setAdapter(statsAdapter);
 
+        Button mainButton=findViewById(R.id.MainButton);
+        mainButton.setOnClickListener(view -> {
+            Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent1);
+        });
     }
 
     public void onBackPressed() {

@@ -14,55 +14,58 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEFAE0"
     tools:context=".SpeechTextActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include layout="@layout/item_result"/>
-
-        <TextView
-            android:id="@+id/inSaveText"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:text="대기 중..."
-            android:textSize="20sp"
-            android:textStyle="italic" />
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <TextView
-            android:id="@+id/inReadText"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+            <include layout="@layout/item_result" />
 
-        <TextView
-            android:id="@+id/rateText"
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:text="TextView"
-            android:textColor="#00FF2B"
-            android:textSize="28sp" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
             android:id="@+id/resultText"
             android:layout_width="match_parent"
-            android:layout_height="94dp"
-            android:text="TextView"
-            android:textColor="#F6D352"
-            android:textSize="30sp"
+            android:layout_height="wrap_content"
+            android:background="#283618"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_medium"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingRight="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_small"
+            android:text="하단의 문장을\n계속해서 읽어주세요.\n[ 시작 ]"
+            android:textColor="#adc178"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/inReadText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#C7B18C"
+            android:paddingLeft="@dimen/spacing_medium"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingRight="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_small"
+            android:text="문장이 나올 곳입니다."
+            android:textColor="#283618"
+            android:textSize="24sp" />
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

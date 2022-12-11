@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:onClick="shutDownClick"
             android:text="돌아가기"
+            android:textColor="#283618"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
