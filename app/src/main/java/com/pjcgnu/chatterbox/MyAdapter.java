@@ -15,9 +15,9 @@ public class MyAdapter extends BaseAdapter {
 
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<ListViewData> viewDatas;
+    ArrayList<MainViewModel> viewDatas;
 
-    public MyAdapter(Context context, ArrayList<ListViewData> data) {
+    public MyAdapter(Context context, ArrayList<MainViewModel> data) {
         mContext = context;
         viewDatas = data;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -34,7 +34,7 @@ public class MyAdapter extends BaseAdapter {
     }
 
     @Override
-    public ListViewData getItem(int position) {
+    public MainViewModel getItem(int position) {
         return viewDatas.get(position);
     }
 
@@ -42,13 +42,13 @@ public class MyAdapter extends BaseAdapter {
     public View getView(int position, View converView, ViewGroup parent) {
         View view = mLayoutInflater.inflate(R.layout.listview_custom, null);
 
-        ImageView bookImages = (ImageView)view.findViewById(R.id.book_image);
         TextView bookNames = (TextView)view.findViewById(R.id.name_tv);
+        ImageView bookImages = (ImageView)view.findViewById(R.id.book_image);
         TextView bookWriters = (TextView)view.findViewById(R.id.writer_tv);
         RatingBar bookRatings = (RatingBar) view.findViewById(R.id.ratingBar_five);
 
-        bookImages.setImageResource(Integer.parseInt(viewDatas.get(position).getBookImage()));
         bookNames.setText(viewDatas.get(position).getBookName());
+        bookImages.setImageResource(Integer.parseInt(viewDatas.get(position).getBookImage()));
         bookWriters.setText(viewDatas.get(position).getBookWriter());
         bookRatings.setRating(viewDatas.get(position).getBookRating());
 

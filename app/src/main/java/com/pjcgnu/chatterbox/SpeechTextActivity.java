@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.cloud.speech.v1.SpeechProto;
 import com.pjcgnu.chatterbox.Databases.EntityClass.BookDatasEntity;
@@ -59,8 +60,15 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
     int readingDataID;
     LocalDateTime readingDataStartTime;
     LocalDateTime readingDataEndTime;
+
+    LocalDateTime StartCheckTime = LocalDateTime.now();
+    LocalDateTime EndCheckTime = LocalDateTime.now();
+
     String bookNameFK;
     boolean endEarlyCheck = false;
+    public static boolean endNowCheck = false;
+
+    private EndDialog endDialog;
 
     //DB 관련
     private int bookDBCounter = 0;
@@ -111,6 +119,8 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
     private TextView mResult;
     private ResultAdapter mAdapter;
     private RecyclerView mRecyclerView;
+
+    int endCountCheck = 0;
 
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -296,24 +306,35 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
                             @Override
                             public void run() {
                                 if (isFinal) {
-                                    mText.setText(null);
-                                    mSave.setText(text);
-                                    mRead.setText(arrayContent[pageCounter]);
-                                    textMatchRate = TextMatching.similarity(
-                                            arrayContent[pageCounter],
-                                            text)*100;  //멀티코어 프로세싱 박아야할듯
-                                    mRate.setText("일치율: " + textMatchRate + "%");
-                                    if(textMatchRate>=70) {
-                                        pageCounter++;
-                                        if(endEarlyCheck == true) {
-
-                                        }
-                                        if(arrayContent[pageCounter].contains("===")) {
-                                            arrayContent[pageCounter] = arrayContent[pageCounter].replaceAll("===", "");
-                                            endEarlyCheck = true;
-                                        }
+                                    if(endEarlyCheck == false) {
+                                        mText.setText(null);
+                                        mSave.setText(text);
                                         mRead.setText(arrayContent[pageCounter]);
-                                        mResult.setText("정답입니다. 계속 읽어주세요.");
+                                        textMatchRate = TextMatching.similarity(
+                                                arrayContent[pageCounter],
+                                                text) * 100;  //멀티코어 프로세싱 박아야할듯
+                                        mRate.setText("일치율: " + textMatchRate + "%");
+                                    }
+                                    if(textMatchRate>=70) {
+                                        if(pageCounter < arrayContent.length);{
+                                            pageCounter++;
+                                        }
+                                        if(endCountCheck <= 0) {
+                                            if (endEarlyCheck == true) {
+                                                endCountCheck++;
+                                                EndCheckTime = LocalDateTime.now();
+                                                setReadingDB();
+                                                endDialog = new EndDialog(SpeechTextActivity.this, StartCheckTime, EndCheckTime);
+                                                endDialog.show();
+                                            } else {
+                                                if (arrayContent[pageCounter].contains("===")) {
+                                                    arrayContent[pageCounter] = arrayContent[pageCounter].replaceAll("===", "");
+                                                    endEarlyCheck = true;
+                                                }
+                                                mRead.setText(arrayContent[pageCounter]);
+                                                mResult.setText("정답입니다. 계속 읽어주세요.");
+                                            }
+                                        }
                                     }
                                     //mAdapter.addResult(text);
                                     //mRecyclerView.smoothScrollToPosition(0);
@@ -321,8 +342,10 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
                                         mResult.setText("오답입니다. 다시 읽어주세요.");
                                     }
                                 } else {
-                                    mText.setText(text);
-                                    mRead.setText(arrayContent[pageCounter]);
+                                    if(endEarlyCheck == false) {
+                                        mText.setText(text);
+                                        mRead.setText(arrayContent[pageCounter]);
+                                    }
                                 }
                             }
                         });
@@ -403,5 +426,14 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
         bookNameFK = ReadingDB.get(counter).getBookDataNameFK();
     }
 
+    private void setReadingDB(){
+        ReadingDatasEntity readingDatasEntity = new ReadingDatasEntity();
+
+        readingDatasEntity.setReadingDataStartTime(StartCheckTime);
+        readingDatasEntity.setReadingDataEndTime(EndCheckTime);
+        readingDatasEntity.setBookDataNameFK(bookDataName);
+        UserRoomDatabase.getDatabase(getApplicationContext()).getReadingDatasDao().insert(readingDatasEntity);
+        Toast.makeText(this, "시간 저장", Toast.LENGTH_SHORT).show();
+    }
 
 }

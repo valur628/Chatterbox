@@ -1,12 +1,12 @@
 package com.pjcgnu.chatterbox;
 
-public class ListViewData {
+public class MainViewModel {
     private String bookName;
     private String bookImage;
     private String bookWriter;
     private float bookRating;
 
-    public ListViewData(String bookNames, String bookImages, String bookWriters, float bookRatings){
+    public MainViewModel(String bookNames, String bookImages, String bookWriters, float bookRatings){
         this.bookName = bookNames;
         this.bookImage = bookImages;
         this.bookWriter = bookWriters;

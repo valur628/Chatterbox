@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
     float bookDataRating_one;
     TextView a;
 
-    ArrayList<ListViewData> arrayListView;
+    ArrayList<MainViewModel> arrayMainViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        resetBook();
 
         a = findViewById(R.id.textViewTest);
         Button dbResetButton=findViewById(R.id.DatabaseResetButton);
@@ -42,17 +41,23 @@ public class MainActivity extends AppCompatActivity {
             resetBook();
         });
 
+        Button statsButton=findViewById(R.id.StatsButton);
+        statsButton.setOnClickListener(view -> {
+            Intent intent1=new Intent(getApplicationContext(),StatsActivity.class);
+            startActivity(intent1);
+        });
+
         this.InitializeBookData();
 
         ListView listView = (ListView)findViewById(R.id.listView);
-        final MyAdapter myAdapter = new MyAdapter(this,arrayListView);
+        final MyAdapter myAdapter = new MyAdapter(this, arrayMainViewModel);
 
         BookDB_one = UserRoomDatabase.getDatabase(getApplicationContext()).getBookDatasDao().getAllData();
-        a.setText(BookDB_one.size() + " ");
+        //a.setText(BookDB_one.size() + " ");
 
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener((parent, v, position, id) -> {
-            a.setText("OI1");
+            //a.setText("OI1");
             Intent intent=new Intent(getApplicationContext(),SpeechTextActivity.class);
             intent.putExtra("pos", position);
             Toast.makeText(getApplicationContext(),
@@ -64,28 +69,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void InitializeBookData()
     {
-        arrayListView = new ArrayList<ListViewData>();
+        arrayMainViewModel = new ArrayList<MainViewModel>();
         BookDB_one = UserRoomDatabase.getDatabase(getApplicationContext()).getBookDatasDao().getAllData();
-        a.setText("IN1");
+        //a.setText("IN1");
         for(int i = 0 ; i<BookDB_one.size(); i++)
         {
-            a.setText("IN2");
+            //a.setText("IN2");
             getBookDB(i);
             if(bookDataImageAddress_one =="N/A") {
                 resetBook();
                 break;
             }
-            arrayListView.add(new ListViewData(bookDataName_one, bookDataImageAddress_one, bookDataWriter_one, bookDataRating_one));
+            arrayMainViewModel.add(new MainViewModel(bookDataName_one, bookDataImageAddress_one, bookDataWriter_one, bookDataRating_one));
         }
     }
 
     List<BookDatasEntity> BookDB;
-    int[] bookDataID = new int[3];
-    String[] bookDataName = new String[3];
-    String[] bookDataImageAddress = new String[3];
-    String[] bookDataWriter = new String[3];
-    String[] bookDataContent = new String[3];
-    float[] bookDataRating = new float[3];
+
+    int DB_count = 7;
+
+    int[] bookDataID = new int[DB_count];
+    String[] bookDataName = new String[DB_count];
+    String[] bookDataImageAddress = new String[DB_count];
+    String[] bookDataWriter = new String[DB_count];
+    String[] bookDataContent = new String[DB_count];
+    float[] bookDataRating = new float[DB_count];
 
     String bookContent;
 
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         bookDataWriter[1] = "장정심";
         loadBook(1);
         bookDataContent[1] = bookContent;
-        bookDataRating[1] = 3;
+        bookDataRating[1] = 4;
 
         bookDataID[2] = 2;
         bookDataName[2] = "그를 보내며";
@@ -115,10 +123,42 @@ public class MainActivity extends AppCompatActivity {
         bookDataWriter[2] = "한용운";
         loadBook(2);
         bookDataContent[2] = bookContent;
-        bookDataRating[2] = 3;
+        bookDataRating[2] = 4;
+
+        bookDataID[3] = 3;
+        bookDataName[3] = "눈물을 마시는 새";
+        bookDataImageAddress[3] = Integer.toString(R.drawable.img_btdb);
+        bookDataWriter[3] = "이영도";
+        loadBook(3);
+        bookDataContent[3] = bookContent;
+        bookDataRating[3] = 2;
+
+        bookDataID[4] = 4;
+        bookDataName[4] = "달";
+        bookDataImageAddress[4] = Integer.toString(R.drawable.img_moon);
+        bookDataWriter[4] = "인공지능";
+        loadBook(4);
+        bookDataContent[4] = bookContent;
+        bookDataRating[4] = 2;
+
+        bookDataID[5] = 5;
+        bookDataName[5] = "비";
+        bookDataImageAddress[5] = Integer.toString(R.drawable.img_rain);
+        bookDataWriter[5] = "인공지능";
+        loadBook(5);
+        bookDataContent[5] = bookContent;
+        bookDataRating[5] = 1;
+
+        bookDataID[6] = 6;
+        bookDataName[6] = "메밀꽃 필 무렵";
+        bookDataImageAddress[6] = Integer.toString(R.drawable.img_wbfb);
+        bookDataWriter[6] = "이효석";
+        loadBook(6);
+        bookDataContent[6] = bookContent;
+        bookDataRating[6] = 5;
 
         BookDatasEntity bookDatasEntity = new BookDatasEntity();
-        for(int i = 0;i<3;i++){
+        for(int i = 0;i<DB_count;i++){
             //bookDatasEntity.setBookDataID(bookDataID[i]);
             bookDatasEntity.setBookDataName(bookDataName[i]);
             bookDatasEntity.setBookDataImageAddress(bookDataImageAddress[i]);
@@ -127,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             bookDatasEntity.setBookDataRating(bookDataRating[i]);
             UserRoomDatabase.getDatabase(getApplicationContext()).getBookDatasDao().insert(bookDatasEntity);
         }
-        Toast.makeText(this, "책 데이터 리셋", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "책 데이터 리셋", Toast.LENGTH_SHORT).show();
     }
     public void loadBook(int selectbook){
         try {
@@ -141,6 +181,18 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     in = getResources().openRawResource(R.raw.book_sendinghimaway);
+                    break;
+                case 3:
+                    in = getResources().openRawResource(R.raw.book_btdb);
+                    break;
+                case 4:
+                    in = getResources().openRawResource(R.raw.book_moon);
+                    break;
+                case 5:
+                    in = getResources().openRawResource(R.raw.book_rain);
+                    break;
+                case 6:
+                    in = getResources().openRawResource(R.raw.book_wbfb);
                     break;
             }
             byte[] b = new byte[in.available()];

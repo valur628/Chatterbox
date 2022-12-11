@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/stats_cover"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_graph" />
+
+        <TextView
+            android:id="@+id/stats_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif"
+            android:text="읽은 책: ?"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/stats_s_time"
+            app:layout_constraintStart_toEndOf="@+id/stats_cover"
+            app:layout_constraintTop_toTopOf="@+id/stats_cover"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/stats_s_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif"
+            android:text="시작 시간: 0분 0시 0초"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/stats_e_time"
+            app:layout_constraintStart_toEndOf="@+id/stats_cover"
+            app:layout_constraintTop_toBottomOf="@+id/stats_name" />
+
+        <TextView
+            android:id="@+id/stats_e_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif"
+            android:text="종료 시간: 0분 0시 0초"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/stats_t_time"
+            app:layout_constraintStart_toEndOf="@+id/stats_cover"
+            app:layout_constraintTop_toBottomOf="@+id/stats_s_time" />
+
+        <TextView
+            android:id="@+id/stats_t_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif"
+            android:text="총 소요 시간: 0시 0분 0초"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/stats_cover"
+            app:layout_constraintTop_toBottomOf="@+id/stats_e_time" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

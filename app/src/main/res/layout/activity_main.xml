@@ -31,8 +31,20 @@
         android:id="@+id/DatabaseResetButton"
         android:layout_width="106dp"
         android:layout_height="50dp"
-        android:layout_marginTop="656dp"
+        android:layout_marginTop="660dp"
         android:text="DB Reset"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/StatsButton"
+        android:layout_width="106dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="560dp"
+        android:text="Stats"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
