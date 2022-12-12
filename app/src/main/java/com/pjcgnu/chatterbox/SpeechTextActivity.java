@@ -313,7 +313,7 @@ public class SpeechTextActivity extends AppCompatActivity implements MessageDial
                             @Override
                             public void run() {
                                 if (isFinal) {
-                                    if(endEarlyCheck == false) {
+                                    if(endCountCheck <= 0) {
                                         mText.setText(null);
                                         //mSave.setText(text);
                                         mRead.setText(arrayContent[pageCounter]);

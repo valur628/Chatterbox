@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
             android:background="@drawable/buttonshape1"
-            android:text="DB\n초기화"
+            android:text="책DB\n초기화"
             android:textColor="#283618"
             android:textSize="11sp"
             android:textStyle="italic" />
